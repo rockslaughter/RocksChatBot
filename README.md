@@ -1,6 +1,7 @@
 Twitter: @RockSlaughter
 Twitch: www.twitch.tv/rockslaughter01
 Facebook: RockSlaughter
+Email: rockslaughter01@gmail.com
 
 Prereqs:
 1. Gradle -- https://gradle.org/install/
