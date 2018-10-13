@@ -15,7 +15,10 @@ import org.json.simple.parser.ParseException;
 
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.JDA.Status;
+import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.entities.impl.JDAImpl;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 /**
@@ -26,6 +29,8 @@ public class ChatBot extends ListenerAdapter {
 	
 	private JDABuilder builder;
 	private JDAImpl god;
+	private JSONObject propsFileJsonArray;
+	private CommandHandler assistant;
 	
 	private ChatBot() {} // override default ctor
 	
@@ -37,12 +42,25 @@ public class ChatBot extends ListenerAdapter {
 		JSONParser jsonParser = new JSONParser();
 		String botToken = "";
         
-        try (FileReader reader = new FileReader("resources\\bot_id.json"))
-        {
+        try {
+//        	FileReader idFile = new FileReader("resources\\bot_idd.json");
+        	FileReader propertiesFile = new FileReader("resources\\properties.json");
+        	FileReader commandsFile = new FileReader("resources\\chat_commands.json");
         	//Read JSON file
-        	JSONObject jsonArray = (JSONObject) jsonParser.parse(reader);
+//        	JSONObject idFileJsonArray = (JSONObject) jsonParser.parse(idFile);
+        	propsFileJsonArray = (JSONObject) jsonParser.parse(propertiesFile);
+        	JSONObject commandsFileJsonArray = (JSONObject) jsonParser.parse(commandsFile);
+        	assistant = new CommandHandler(commandsFileJsonArray);
             
-            botToken = jsonArray.get("bot_token").toString();
+//        	if (idFile != null) {
+//        		botToken = idFileJsonArray.get("bot_token").toString();
+//        	} else {
+        		botToken = propsFileJsonArray.get("bot_token").toString();
+//        	}
+        	
+        	if (botToken.equals("")) {
+        		System.out.println("Bot token was not set! Add it to properties.json");
+        	}
             
  
         } catch (IOException e) {
@@ -61,8 +79,18 @@ public class ChatBot extends ListenerAdapter {
 		} catch (LoginException | InterruptedException e) {
 			e.printStackTrace();
 		}
-        
-        
 	}
 
+	@Override
+	public void onMessageReceived(MessageReceivedEvent event) {
+		String eventMessage = event.getMessage().getContentDisplay();
+		String command = eventMessage.substring(1, eventMessage.length()); // original = !hello ; command = hello ; this removes the !
+		User user = event.getAuthor();
+		MessageChannel channel = event.getChannel();
+		
+		if (eventMessage.charAt(0) == '!') {
+			assistant.handleCommand(command, user, channel);
+		}
+		
+	}
 }
