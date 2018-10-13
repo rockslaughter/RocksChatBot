@@ -40,7 +40,7 @@ task jarAll(type: Jar) {
 			'Implementation-Version': '.01',
 			'Main-Class': 'com.chatbot.main.Main'
 	}
-	baseName = 'RocksChatBot' + '-all'
+	baseName = 'RocksChatBot'
 	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
