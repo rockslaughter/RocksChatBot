@@ -1,0 +1,5 @@
+{
+	"hello" : "Hello, [$UNAME]",
+	"goodbye" : "Goodbye, [$UNAME]",
+	"highfive" : "Slap hands!"
+}
