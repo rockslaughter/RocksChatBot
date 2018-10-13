@@ -1,7 +1,9 @@
-Twitter: @RockSlaughter
-Twitch: www.twitch.tv/rockslaughter01
-Facebook: RockSlaughter
-Email: rockslaughter01@gmail.com
+This is a basic discord bot written in JAVA. 
+
+Twitter: @RockSlaughter  
+Twitch: www.twitch.tv/rockslaughter01  
+Facebook: RockSlaughter  
+Email: rockslaughter01@gmail.com  
 
 Prereqs:
 1. Gradle -- https://gradle.org/install/
@@ -13,7 +15,9 @@ Compile:
 
 Run:
 1. Move the RocksChatBot.jar to the project root.
-2. In the command line at the project root run "javaw -jar RocksChatBot.jar"
+2. Add your bot token to the properties.json file (found in the resources folder) 
+  a. https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token if you haven't done this yet.
+3. In the command line at the project root run "javaw -jar RocksChatBot.jar"
 
 Stopping the bot:
 1. In the command line run "taskkill /f /im javaw.exe"
